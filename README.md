@@ -24,7 +24,7 @@ Chosen because it uses Spring Boot + JPA + PostgreSQL with a clean layered struc
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/<your-username>/spring-boot-fullstack-professional.git
+git clone https://github.com/NAVEENKUMARKR777/spring-boot-fullstack-professional.git
 cd spring-boot-fullstack-professional
 ```
 
