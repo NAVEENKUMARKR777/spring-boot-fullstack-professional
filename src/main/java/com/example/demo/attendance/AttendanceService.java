@@ -68,13 +68,9 @@ public class AttendanceService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Site not found or inactive: " + request.getSiteId()));
 
+        // Clock-in time is always server-side — cannot be in the future by definition.
+        // The business rule "clock-in cannot be in the future" is enforced structurally.
         LocalDateTime clockIn = LocalDateTime.now();
-
-        // Clock-in cannot be in the future (guard against client clock skew)
-        if (clockIn.isAfter(LocalDateTime.now().plusMinutes(1))) {
-            throw new BusinessRuleException("INVALID_CLOCK_IN_TIME",
-                    "Clock-in time cannot be in the future");
-        }
 
         // Prevent double clock-in — check Redis first, fall back to DB
         boolean alreadyActive = isWorkerActiveInCache(worker.getId());

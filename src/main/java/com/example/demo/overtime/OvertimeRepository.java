@@ -1,5 +1,6 @@
 package com.example.demo.overtime;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +22,10 @@ public interface OvertimeRepository extends JpaRepository<OvertimeEntry, Long> {
             @Param("endDate")   LocalDate endDate
     );
 
-    // Fetch all entries for a worker within a month — used by summary and settlement
+    // Fetch all entries for a worker within a month.
+    // @EntityGraph loads the attendance association in the same JOIN query, avoiding N+1
+    // when the summary endpoint accesses e.getAttendance().getId().
+    @EntityGraph(attributePaths = "attendance")
     @Query("SELECT o FROM OvertimeEntry o WHERE o.worker.id = :workerId " +
            "AND o.date BETWEEN :startDate AND :endDate ORDER BY o.date ASC")
     List<OvertimeEntry> findByWorkerIdAndDateRange(
