@@ -59,3 +59,7 @@ build/
 # Downloaded Node.js runtime (frontend-maven-plugin)
 src/frontend/node/
 
+# Environment secrets — never commit
+.env
+app.log
+
