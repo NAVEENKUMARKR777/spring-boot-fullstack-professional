@@ -56,3 +56,6 @@ build/
 **/yarn-debug.log*
 **/yarn-error.log*
 
+# Downloaded Node.js runtime (frontend-maven-plugin)
+src/frontend/node/
+
